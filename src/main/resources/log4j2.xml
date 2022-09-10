@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Properties>  
+  		<property name="fileSize">@logFileSize@</property>
+  		<property name="fileAmount">@logFileAmount@</property>
+  	</Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%-7p %d{yyyy-MM-dd HH:mm:ss} [%tid] %m |%C{1}.%M:%line|%n" />
+        </Console>
+
+        <RollingFile name="RollingFile"
+            fileName="./logs/sirmatask01/EmployeesPairs.log"
+            filePattern="./logs/sirmatask01/EmployeesPairs-%d{yyyy-MM-dd}-%i.log">
+
+            <PatternLayout
+                pattern="%-7p %d{yyyy-MM-dd HH:mm:ss} [%tid] %m |%C{1}.%M:%line|%n" />
+            <Policies>
+                <!-- rollover on daily and when the file reaches
+                    50 MegaBytes -->
+                <SizeBasedTriggeringPolicy
+                        size="${fileSize}" />
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+            <DefaultRolloverStrategy max="${fileAmount}" />
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <!-- LOG everything at INFO level -->
+        <Root level="@logLevel@">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="RollingFile" />
+        </Root>
+
+        <Logger name="org.dnikolov.sirmatask01" level="@logLevel@">
+
+        </Logger>
+    </Loggers>
+
+</Configuration>
